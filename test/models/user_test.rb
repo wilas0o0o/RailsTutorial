@@ -5,7 +5,7 @@ Minitest::Reporters.use!
 class UserTest < ActiveSupport::TestCase
 
   def setup
-    @user = User.new(name: "Example User", email: "user@example.com", 
+    @user = User.new(name: "Example User", email: "user@example.com",
                     password: "foobar", password_confirmation: "foobar")
   end
 
@@ -50,7 +50,7 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.valid?, "#{invalid_address} should be invalid"
     end
   end
-  
+
   #一意性のテスト
   test "email addresses should be unique" do
     duplicate_user = @user.dup
@@ -58,7 +58,7 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     assert_not duplicate_user.valid?
   end
-  
+
   #メールアドレスを小文字に変換するテスト
   test "email addresses should be saved as lower-case" do
     mixed_case_email = "Foo@ExAMPle.CoM"
@@ -66,15 +66,15 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     assert_equal mixed_case_email.downcase, @user.reload.email
   end
-  
+
   #パスワードのバリデーションテスト
   test "password should be present (nonblank)" do
     @user.password = @user.password_confirmation = " " * 6
     assert_not @user.valid?
   end
-  
+
   test "password should have a minimum length" do
     @user.password = @user.password_confirmation = "a" * 5
-    assert_not @user.valod?
+    assert_not @user.valid?
   end
 end
